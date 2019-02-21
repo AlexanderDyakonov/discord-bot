@@ -1,9 +1,8 @@
-const Discord = require("discord.js");
-const Enmap = require("enmap");
-const fs = require("fs");
+const Discord = require('discord.js');
+const Enmap = require('enmap');
+const fs = require('fs');
 const client = new Discord.Client();
-const config = require("./config.json");
-const randomPuppy = require('random-puppy');
+const config = require('./config.json');
 const cp = require('child_process');
 const path = require('path');
 
@@ -14,23 +13,23 @@ client.config = config;
   console.log("I am ready!");
 });*/
 
-fs.readdir(__dirname + "/events/", (err, files) => {
+fs.readdir(__dirname + '/events/', (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
     const event = require(`./events/${file}`);
-    let eventName = file.split(".")[0];
+    let eventName = file.split('.')[0];
     client.on(eventName, event.bind(null, client));
   });
 });
 
 client.commands = new Enmap();
 
-fs.readdir(__dirname + "/commands/", (err, files) => {
+fs.readdir(__dirname + '/commands/', (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
-    if (!file.endsWith(".js")) return;
+    if (!file.endsWith('.js')) return;
     let props = require(`./commands/${file}`);
-    let commandName = file.split(".")[0];
+    let commandName = file.split('.')[0];
     console.log(`Attempting to load command ${commandName}`);
     client.commands.set(commandName, props);
   });
